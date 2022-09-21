@@ -93,27 +93,27 @@ while True:
         message = socket.recv_multipart()
 
         # If LIST command
-        if message[0] == "LIST" and len(message) > 1:
-            d = base64.b64decode(message[1])
-            print(("\n  - Currently logged on: %s\n" % (d)))
+        if message[0] == b"LIST" and len(message) > 1:
+            d = message[1].decode()
+            print(f"\n  - Currently logged on: {d}\n")
             print_prompt(" <- ")
 
         # If MSG
-        if message[0] == "MSG" and len(message) > 1:
-            d = message[1]  # base64.b64decode(message[1])
-            print(("\n  > %s" % (d)))
+        if message[0] == b"MSG" and len(message) > 1:
+            d = message[1].decode()  # base64.b64decode(message[1])
+            print(f"\n  > {d}")
             print_prompt(" <- ")
 
         # If response to the REGISTER message
-        if message[0] == "REGISTER" and len(message) > 1:
-            d = message[1]  # base64.b64decode(message[1])
-            print(("\n <o> %s" % (d)))
+        if message[0] == b"REGISTER" and len(message) > 1:
+            d = message[1].decode()  # base64.b64decode(message[1])
+            print(f"\n <o> {d}")
             print_prompt(" <- ")
 
         # If error encountered by server
-        if message[0] == "ERR" and len(message) > 1:
-            d = message[1]  # base64.b64decode(message[1])
-            print(("\n <!> %s" % (d)))
+        if message[0] == b"ERR" and len(message) > 1:
+            d = message[1].decode()  # base64.b64decode(message[1])
+            print(f"\n <!> {d}")
             print_prompt(" <- ")
 
     # if input on stdin -- process user commands
@@ -139,4 +139,4 @@ while True:
 
         # SEND command is sent as a three parts ZMQ message, as "SEND destination message"
         elif cmd[0] == "SEND" and len(cmd) > 2:
-            socket.send_multipart([cmd[0], cmd[1], cmd[2]])
+            socket.send_multipart([cmd[0].encode(), cmd[1].encode(), cmd[2].encode()])

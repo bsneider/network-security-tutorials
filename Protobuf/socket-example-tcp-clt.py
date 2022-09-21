@@ -31,14 +31,14 @@ for reqno in range(100):  # send 100 requests
 
     # get request type from user
     rcmd = eval(input("Request Type (1: ECHO, 2: RCMD): "))
-
-    if rcmd == "1":  # will generate an ECHO request
+    print(str(rcmd) == "1")
+    if str(rcmd) == "1":  # will generate an ECHO request
         rqst.type = pb_example_pb2.Request.ECHO
 
         # payload is an arbitrary string for ECHO
         rqst.payload = eval(input("Your text to be echoed: "))
 
-    elif rcmd == "2":  # will generate a request to execure a command on server
+    elif str(rcmd) == "2":  # will generate a request to execure a command on server
         rqst.type = pb_example_pb2.Request.RCMD
 
         # payload is a command to be executed on server
